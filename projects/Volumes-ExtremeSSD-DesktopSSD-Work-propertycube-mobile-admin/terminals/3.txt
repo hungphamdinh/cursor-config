@@ -1,0 +1,6 @@
+---
+pid: 89512
+cwd: /Volumes/ExtremeSSD/DesktopSSD/Work/propertycube-mobile-admin
+---
+(base) phamdinhhung@Phams-MacBook-Pro-2 propertycube-mobile-admin % 
+(base) phamdinhhung@Phams-MacBook-Pro-2 propertycube-mobile-admin %

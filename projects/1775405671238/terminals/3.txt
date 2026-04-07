@@ -1,0 +1,6 @@
+---
+pid: 60903
+cwd: /Users/phamdinhhung
+---
+(base) phamdinhhung@Phams-MacBook-Pro-2 ~ % 
+(base) phamdinhhung@Phams-MacBook-Pro-2 ~ %

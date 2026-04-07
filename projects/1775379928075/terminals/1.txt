@@ -1,0 +1,5 @@
+---
+pid: 93176
+cwd: /Users/phamdinhhung
+---
+path_helper: .newfile.swp: Permission denied

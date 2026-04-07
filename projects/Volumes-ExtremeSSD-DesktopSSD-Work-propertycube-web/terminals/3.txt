@@ -1,0 +1,5 @@
+---
+pid: 19129
+cwd: /Volumes/ExtremeSSD/DesktopSSD/Work/propertycube-web
+---
+path_helper: .newfile.swp: Permission denied

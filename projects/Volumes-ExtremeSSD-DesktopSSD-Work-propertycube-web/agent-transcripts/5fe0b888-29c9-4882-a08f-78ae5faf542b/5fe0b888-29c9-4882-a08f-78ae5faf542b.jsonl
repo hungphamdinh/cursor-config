@@ -1,0 +1,2 @@
+{"role":"user","message":{"content":[{"type":"text","text":"<user_query>\nhi\n</user_query>"}]}}
+{"role":"assistant","message":{"content":[{"type":"text","text":"Hi there.\n\nI can help with the **propertycube-web** repo (Angular/work orders, job requests, etc.) or anything else you’re working on. What would you like to do next?\n\n[REDACTED]"}]}}
