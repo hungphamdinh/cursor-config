@@ -30,6 +30,12 @@ projects/*/*
 # User-level global agents
 !agents/
 !agents/**
+# Tracked editor preferences
+!README.md
+!argv.json
+!mcp.json
+!user/
+!user/**
 # User's personal skills
 !skills/
 !skills/**

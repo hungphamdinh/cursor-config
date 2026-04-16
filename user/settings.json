@@ -1,0 +1,49 @@
+{
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "cSpell.userWords": [
+        "UNFOLLOW",
+        "animatable"
+    ],
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "gitlens.views.compare.files.layout": "list",
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "genieai.enableConversationHistory": true,
+    "chatgpt.lang": "en",
+    "bracket-pair-colorizer-2.depreciation-notice": false,
+    "diffEditor.useInlineViewWhenSpaceIsLimited": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "aws.suppressPrompts": {
+        "codeWhispererNewWelcomeMessage": true
+    },
+    "npm.keybindingsChangedWarningShown": true,
+    "editor.inlineSuggest.suppressSuggestions": true,
+    "cody.autocomplete.advanced.provider": "experimental-ollama",
+    "cloudcode.duetAI.project": "tactile-acolyte-310110",
+    "cloudcode.project": "tactile-acolyte-310110",
+    "cloudcode.duetAI.enable": false,
+    "apklab.apkSignerPath": "/Users/phamdinhhung/.apklab/uber-apk-signer-1.3.0.jar",
+    "apklab.jadxDirPath": "/Users/phamdinhhung/.apklab/jadx-1.4.7",
+    "apklab.apktoolPath": "/Users/phamdinhhung/.apklab/apktool_2.9.3.jar",
+    "github.copilot.editor.enableAutoCompletions": true,
+    "git.autofetch": true,
+    "[yaml]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "makefile.configureOnOpen": false,
+    "workbench.editorAssociations": {
+        "*.vsix": "default"
+    },
+    "workbench.secondarySideBar.defaultVisibility": "hidden",
+    "debug.disassemblyView.showSourceCode": false
+}
