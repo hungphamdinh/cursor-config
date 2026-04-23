@@ -1,0 +1,6 @@
+display_name: "Requirements Delivery"
+short_description: "From BA requirements to coded, validated delivery notes."
+default_prompt: >-
+  Use $requirements-delivery to process requirements end-to-end: analyze impact,
+  find related code, propose a plan, implement changes, validate, and produce
+  summary plus test notes.

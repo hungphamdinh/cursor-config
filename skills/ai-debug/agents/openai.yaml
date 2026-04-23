@@ -1,0 +1,5 @@
+display_name: AI Debug
+short_description: Simulator file-log driven debugging workflow with autonomous trace collection.
+default_prompt: >-
+  Use AI Debug workflow: add scoped file logs, collect simulator logs yourself, map expected vs
+  actual flow, isolate root cause, and apply minimal safe fixes.

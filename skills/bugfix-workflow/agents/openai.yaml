@@ -1,0 +1,5 @@
+display_name: Bugfix Workflow
+short_description: Conservative root-cause-first bugfix process with scoped edits and safe git behavior.
+default_prompt: >-
+  Use the bugfix-workflow process: isolate root cause first, apply the smallest scoped patch,
+  run targeted validation, report risks, and avoid commit/push unless explicitly requested.

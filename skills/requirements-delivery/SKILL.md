@@ -5,15 +5,27 @@ description: >-
   exploration, Jest-only test updates, minimal implementation, and regression review.
   Use for React Native and business-logic-heavy changes, new features, change requests,
   bugfix specs, or when the user asks for requirements delivery, phased workflow, or
-  explorer/tester/reviewer passes. Orchestrates subagents (explore, requirement-unit-tests,
-  bug-detect) plus a single minimal final patch.
+  explorer/tester/reviewer passes. Orchestrates focused passes (explore, tests, review)
+  plus a single minimal final patch.
 ---
 
 # Requirements Delivery (multi-phase)
 
-Use this workflow when the ask includes new requirements, CRs, acceptance criteria, non-trivial bugfixes, or cross-cutting RN/state/API work.
+Use this workflow when a request includes new requirements, CRs, acceptance criteria, non-trivial bugfixes, or cross-cutting RN/state/API work.
 
-**Trivial tasks** (single obvious file, typo, one-liner): skip subagent phases; implement directly and still follow project rules.
+**Trivial tasks** (single obvious file, typo, one-liner): skip phased passes; implement directly and still follow project rules.
+
+## Delegation rule
+
+When the active repository defines repo-local subagents under `.cursor/agents/`, use `task-router` first for complex or cross-cutting tasks. Follow its routing plan and prefer the minimum useful set of downstream passes.
+
+Typical downstream agents in this repo family:
+
+- `acceptance-criteria-writer` when the request is still vague.
+- `requirements-workflow` for readonly requirements and impact exploration.
+- `requirement-unit-tests` for Jest-first test authoring.
+- `bug-detect` for post-implementation regression review.
+- Specialist reviewers such as `navigation-impact-review`, `context-state-audit`, `service-contract-check`, and `offline-db-safety` only when the touched area justifies them.
 
 ## Gate 0 — Project rules
 
@@ -22,40 +34,42 @@ Use this workflow when the ask includes new requirements, CRs, acceptance criter
 
 ## Required inputs
 
-From the prompt or repo context:
+Collect from the prompt or repo context:
 
 - Requirement text (scope, expected behavior, out-of-scope)
 - Targets (e.g. iOS/Android, screens affected)
 - Acceptance criteria and risk notes
 - Constraints (API contracts, backward compatibility, flags)
 
-If something critical is missing, state the **assumption** before coding.
+If a critical detail is missing and risky to assume, state the **assumption** before implementation.
 
 ## Phased delivery
 
-Run phases **in order**. After each subagent phase, paste the **handoff block** into the main thread before continuing.
+Run phases **in order**. After each focused pass, carry the **handoff block** forward before continuing.
 
 ### 1) Read and normalize requirements (main)
 
-- Checklist of expected outcomes; separate functional, non-functional, and edge cases.
-- Note ambiguities; use safest assumption if unclear.
+- Concise checklist of expected outcomes; separate functional, non-functional, edge cases.
+- Note ambiguities; safest assumption if clarification unavailable.
+
+If repo subagents exist and the task is complex, start with a `task-router` pass before finalizing this checklist.
 
 **Artifact:** `Requirements Checklist` (numbered, testable).
 
 ### 2) Impact sketch (main, brief)
 
 - Map checklist items to layers: UI, state, API, data, permissions, analytics, tests.
-- Initial risk: `low|medium|high` per area; flags, config, backend dependencies.
+- Regression, migration, environment risk; flags, config, backend dependencies.
 
 **Artifact:** `Impact Analysis` (initial).
 
 ### 3) Explorer phase (readonly)
 
-**Purpose:** execution path, impacted files, **root cause only** (for bugs); no production edits.
+**Purpose:** execution path, impacted files, **root cause only** (bugs); no production edits.
 
-**How:** Run a **readonly** exploration pass (e.g. Task `explore` with `readonly: true`). Search and read files; do not patch.
+**How:** Readonly search and read; no patch. Prefer an isolated readonly exploration pass when the tool allows.
 
-**Handoff block (required):**
+**Handoff block:**
 
 ```markdown
 ### Explorer handoff
@@ -67,20 +81,18 @@ Run phases **in order**. After each subagent phase, paste the **handoff block** 
 
 Refine `Impact Analysis` if explorer contradicts the sketch.
 
-**Artifact:** `Related Code Map` (files + why each matters).
+**Artifact:** `Related Code Map` (files + relevance).
 
 ### 4) Implementation plan (main)
 
-- Minimal ordered steps and checkpoints; map steps to acceptance criteria.
-- Test strategy before coding (unit/integration/manual as the repo expects).
+- Minimal ordered steps with checkpoints; acceptance mapping per step.
+- Test strategy before coding.
 
 **Artifact:** `Implementation Plan`.
 
 ### 5) Tester phase (Jest only)
 
-**Purpose:** define or update **Jest** tests; **no production source edits**.
-
-**How:** Dedicated pass (e.g. Task `requirement-unit-tests`) scoped to test files only.
+**Purpose:** define/update **Jest** tests; **no production source edits**.
 
 **Handoff block:**
 
@@ -91,21 +103,15 @@ Refine `Impact Analysis` if explorer contradicts the sketch.
 - Gaps / not covered yet: …
 ```
 
-Skip this phase only when the user explicitly wants implementation-first or the change is non-code.
+Skip when the user wants implementation-first or the change is non-code.
 
 ### 6) Implement phase (minimal patch)
 
-**Purpose:** smallest complete change that satisfies requirements.
-
-**How:** Prefer **main agent** or one focused Task (`generalPurpose`) with a tight brief: match existing patterns, avoid unrelated edits, prefer **hook extraction** only when it clearly reduces complexity.
-
-**Rules:** Preserve architecture unless the requirement demands otherwise; concise comments only for non-obvious logic.
+Smallest complete change; match existing style; avoid unrelated edits; prefer **hook extraction** only when it clearly simplifies.
 
 ### 7) Reviewer phase (readonly)
 
-**Purpose:** regressions, business rules, missing edge cases.
-
-**How:** Readonly review (e.g. Task `bug-detect` or second readonly pass). **No edits** in this phase—only findings.
+**Purpose:** regressions, business rules, missing edge cases. **No edits**—findings only.
 
 **Handoff block:**
 
@@ -119,24 +125,21 @@ Skip this phase only when the user explicitly wants implementation-first or the 
 
 ### 8) Main: integrate and finalize
 
-- Merge into **one coherent minimal diff**; address reviewer must-fix items.
-- Keep traceability: requirement item → code → tests.
+One coherent minimal diff; address reviewer must-fix items. Trace requirement → code → tests.
 
 ### 9) Validate
 
 - **Do not** run build, test, lint, or long jobs **by default** unless the user explicitly asks.
-- Provide a **manual verification checklist** and **recommended commands** for the user.
+- Provide manual verification checklist and recommended commands.
 - If commands were run, record exact commands and outcomes.
 
-**Artifact:** `Validation Results` (per command or `Not run (user will execute)`).
+**Artifact:** `Validation Results`.
 
 ### 10) Delivery summary
 
 **Artifact:** `Delivery Notes` (PR/Jira-ready).
 
 ## Response template
-
-Use this section order for requirement-delivery tasks:
 
 1. `Requirements Checklist`
 2. `Impact Analysis` (refined after explorer if needed)
@@ -150,8 +153,9 @@ Use this section order for requirement-delivery tasks:
 
 ## Quality rules
 
-- Traceability: requirement → change → validation evidence.
-- Do not invent owners; use `Owner: Unknown` when unclear.
-- Prefer concrete paths and explicit commands over vague summaries.
-- Call out blockers early with the **smallest decision** needed to proceed.
-- Subagents **must** respect phase boundaries: explorer/reviewer **readonly**; tester **tests only**.
+- Traceability: requirement item → code change → validation evidence.
+- Do not assign owner without signal; use `Owner: Unknown` when unclear.
+- Prefer concrete file references and explicit commands.
+- Do not execute validation/build jobs unless explicitly requested by the user.
+- Call out blockers immediately with the minimal decision needed to proceed.
+- Phase boundaries: explorer/reviewer **readonly**; tester **tests only**.
